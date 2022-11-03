@@ -1,25 +1,30 @@
 # Background
-Every election cycle, accessibility and ease of voting is on top of our minds in order to encourage all voters to participate in the election process. Various campaigns focus on voter turnout, as the recent elections have been decided by very small margins. In order to promote voter turnout, we first need to understand the 2020 presidential election. We, as a non-profit data science organization specializing in political science, have received 2020 election data sets to further this research. American National Election Studies (ANES) is a foundation that provides high quality data from its surveys on voting, public opinion, and political participation in order to support research needs. Restricted time series data from ANES was used for our analysis.
+Giant Pumpkin competitions have grown in popularity over time and have evolved into a highly competitive sport among farmers with substantial cash prizes and even an organizing body called the Great Pumpkin Commonwealth (GPC) [5] that establishes standards, eligibility requirements, and hosts regional competitions that enable qualification into an annual national championship. While giant pumpkins are the original, largest, and most popular GPC category, other plant species from the Cucurbitaceae (“Cucurbit”) family can be entered which includes field pumpkins, squashes, gourds, and watermelons. A niche but passionate community of growers, researchers, and aficionados have developed novel seed genetics as well as cultivation techniques in order to maximize the harvest weight of this family of gourds, with champion pumpkins frequently weighing in at over 2,000 lbs [8].
+
+While there are many factors that a grower can control that contribute to the harvest weight of a pumpkin and other Cucurbits such as choice of seed genetics, cultivation method, and the skill of the grower, one of the most important factors in pumpkin plant growth and fruit production is environmental conditions such as temperature and precipitation. The goal of this research study is to investigate the impact of environmental factors on the weight of Cucurbits entered into official GPC competitions in the United States and determine whether certain climate conditions, and therefore geographic location, have an advantage over others when choosing where to grow a competitive giant pumpkin or cucurbits.
 
 # Objective
-The analysis focuses on identifying whether voters from each party faced the same amount of difficulty in the 2020 presidential election. Our goal is to use data sets to compare difficulties that were faced in the 2020 presidential election, to help better prepare for the upcoming 2024 presidential election. Below key research question:
-Did Democratic voters or Republican voters experience more difficulty voting in the 2020 election?
-Results of this study could provide more in depth insight for the federal government election department, when creating policies on campaigns that impact voter turnout and ensuring that Democrats and Republicans voting difficulty is not biased. Furthermore, this could increase the equality in the voting process.
+Our research question is:
+What impact do temperature and precipitation have on the weight of giant pumpkins and other cucurbits grown in the United States that were entered into official GPC competitions between the years 2013 - 2021?
 
 # Data
-Data from the 2020 American National Election Study (ANES). The data set is observational and is based on a sample of survey respondents from the YouGov platform.
+In order to answer this question, we evaluated all competitive entries in official GPC competitions from 2013 - 2021 and modeled the official competition weight of the pumpkin or cucurbit as a function of the weather conditions it was grown under, while controlling for additional factors. Given weather is a complex system and pumpkins are grown over many months, we considered several different aggregated weather metrics such
+as maximum daily temperature, minimum daily temperature, and amount of daily precipitation.
 
-As a part of our analysis, we reduced the original data set to a smaller sample through data wrangling to eliminate unnecessary or incomplete information. The data set was reduced to four columns: “2020 Case ID”, “Party of Registration (Pre-election)”, “Voter Turnout 2020”, “How Difficult it was to Vote”. The most important variables in our analysis were difficulty voting (response variable) and the Party of Registration (explanatory variable). The variables for 2020 Case ID and Voter Turnout 2020 served to ensure that each voter had a unique ID in the data set and to validate that each respondent voted in the 2020 election. 
+1. Pumpkin/Cucurbit Data
+We obtained official GPC weights of pumpkins, tomatoes, squashes, and watermelons from the Giant Pumpkins data [4] set which was pulled from www.bigpumpkins.com. This data set included the city and state it was grown in, the year of the competition, and the type of the Cucurbit (Giant Pumpkin, Field Pumpkin, Giant Squash, Giant Watermelon, or Tomato).
+
+2. City Coordinate Data:
+City coordinate data was obtained from the World Cities Database [10] on Kaggle. This data was used to cross reference cities in the official GPC weight data set and determine their latitude and longitude.
+
+3. Weather Data:
+Weather data was obtained from National Oceanographic and Atmospheric Association Climate Data [2] which provided daily minimum temperature, daily maximum temperature, daily rainfall, and other climate data from weather stations across the United States. The coordinates of each pumpkin/Cucurbit was compared to the coordinates of all weather stations to determine its nearest weather station. The selected weather metrics were then aggregated over the growing months for each year and associated with that pumpkin/cucurbit record.
+
 
 # Methods
-From the ANES data, features have been selected from 1771 available variables. Then, test was run to compare the voter difficulty.
+Various regression models have been built and tested with the dependent variable being the cucurbit weight in pounds.
 
-Few consideration have been made to identify an adequete statistical test. First, this is not two measures on the same sample given that one interview can be only either Democrat or Republican, not both. This allowed us to follow the unpaired test decision tree. Next, given the ordinal dataset, the data gathered is not in an interval or ratio scale. This has led us to choose to conduct the Wilcoxon Rank-Sum Test - Comparison version.
-
-Null hypothesis tested is that the probability that a draw from difficulty faced by Democrats (D) ranks higher than a draw from difficulty faced by Republicans (R) is the same as the probability that a draw from difficulty faced by Republicans ranks higher than a draw from difficulty faced by Democrats.
-(P(R > D) = P(D > R))
 
 # Conclusion
-Our study provided evidence that from a statistical perspective, both groups did not experience the same difficulty when voting in the 2020 presidential election. However, due to the type of test that we performed, the ordinal nature of the data, and the number of ties present in the question studied, the effect size we were measuring was far too small to have practical significance.
-
-Our next step is to design a study that addresses some of the limitations that we encountered in this study to hopefully get a practical result in the future. To address these limitations, we hope to be involved in the complete data collection process, with the goal of collecting rich data that will have less ties to quantify the difficulty voting and be able to compare two groups more effectively.
+Our research question aimed to determine the causal relationship between weather attributes and cucurbit weight. Unfortunately, our model did not have practical significance in regards to our weather variables. While we have determined that weather does have a statistically significant effect on pumpkin weight, as mentioned previously, the coefficients of our weather variables were so low that we cannot provide recommendations to growers of how their practices should change. Ultimately, while we can say that weather does have an effect on pumpkins, we cannot confidently say how different weather affects the growth of pumpkins.
+We can suggest that further exploration needs to be done on factors that affect cucurbits. Due to the limitation of the data, other external factors that may have impacted the cucurbit weight were not included in our research, namely the specific growing methods individual growers used. There should be follow up research to explore the omitted variables such as external growing methods and irrigation systems to better understand the explanatory relationship between the omitted variables and the outcome variable.
