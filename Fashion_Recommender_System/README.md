@@ -1,5 +1,5 @@
-# mids-w207-marque-intae-nikhil-kisha-final-project-REPO
-mids-w207-marque-intae-nikhil-kisha-final-project-REPO
+# Background
+
 
 Objective - predict the article_ids each customer will purchase during the 7-day period immediately after the training data period.
 
@@ -20,4 +20,4 @@ Team : Intae Kim, Kisha Kim, Nikhil PrasannaKumar, Marque Green
 3. Final_Project_LightFM_Model.ipynb : This notebook was used to run LightFM, which is the main hybrid model ran for this project. Includes model evalualtion, hypertuning and final model result.
 
 
-**Final Presentation** : W207-Final Project - H&M Personalized Fashion Recommendations.pdf
+**Final Presentation** : Personalized Fashion Recommendations.pdf
