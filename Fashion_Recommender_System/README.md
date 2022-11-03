@@ -3,11 +3,7 @@
 
 Objective - predict the article_ids each customer will purchase during the 7-day period immediately after the training data period.
 
-Link to Kaggle Project - https://www.kaggle.com/c/h-and-m-personalized-fashion-recommendations/data
-
-Team : Intae Kim, Kisha Kim, Nikhil PrasannaKumar, Marque Green
-
-**Data Folder Structure**
+**Data Files**
 
 * articles.csv - detailed metadata for each article_id available for purchase
 * customers.csv - metadata for each customer_id in dataset
@@ -20,4 +16,4 @@ Team : Intae Kim, Kisha Kim, Nikhil PrasannaKumar, Marque Green
 3. Final_Project_LightFM_Model.ipynb : This notebook was used to run LightFM, which is the main hybrid model ran for this project. Includes model evalualtion, hypertuning and final model result.
 
 
-**Final Presentation** : Personalized Fashion Recommendations.pdf
+**Final Report** : Personalized Fashion Recommendations.pdf
