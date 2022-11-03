@@ -1,6 +1,6 @@
 ---
-title: "W203 Lab 2"
-author: 'w203 team 1: Kisha Kim, Patricia Gallagher, Sean Koval, Eric Ellestad'
+title: "Causal Relationship between Environmental Factors on Cucurbit(Pumpkin) Weight"
+author: 'Kisha Kim, Patricia Gallagher, Sean Koval, Eric Ellestad'
 subtitle: 'Impact of Weather Factors on Giant Pumpkin and Competitive Cucurbit Competition Harvest Weights'
 output:
   pdf_document: default
@@ -119,7 +119,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r load data, echo = FALSE } 
-d_pumpkin <- read.csv("pumpkin_consol.csv")
+d_pumpkin <- read.csv("./Data/pumpkin_consol.csv")
 d_pumpkin <- d_pumpkin %>%
   filter(type !="Long Gourd") 
 ```
