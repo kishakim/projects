@@ -7,7 +7,7 @@ Did Democratic voters or Republican voters experience more difficulty voting in 
 Results of this study could provide more in depth insight for the federal government election department, when creating policies on campaigns that impact voter turnout and ensuring that Democrats and Republicans voting difficulty is not biased. Furthermore, this could increase the equality in the voting process.
 
 # Data
-Data from the 2020 American National Election Study (ANES). The data set is observational and is based on a sample of survey respondents from the YouGov platform. ./Data
+Data from the 2020 American National Election Study (ANES). The data set is observational and is based on a sample of survey respondents from the YouGov platform.
 
 As a part of our analysis, we reduced the original data set to a smaller sample through data wrangling to eliminate unnecessary or incomplete information. The data set was reduced to four columns: “2020 Case ID”, “Party of Registration (Pre-election)”, “Voter Turnout 2020”, “How Difficult it was to Vote”. The most important variables in our analysis were difficulty voting (response variable) and the Party of Registration (explanatory variable). The variables for 2020 Case ID and Voter Turnout 2020 served to ensure that each voter had a unique ID in the data set and to validate that each respondent voted in the 2020 election. 
 
