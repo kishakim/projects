@@ -1,4 +1,3 @@
 # projects
 
-List of Projects
-1. 
+## using - machine learning, data clenasing, regression, statitical modeling
