@@ -5,7 +5,7 @@ While there are many factors that a grower can control that contribute to the ha
 
 # Objective
 Our research question is:
-What impact do temperature and precipitation have on the weight of giant pumpkins and other cucurbits grown in the United States that were entered into official GPC competitions between the years 2013 - 2021?
+What impact do temperature and precipitation have on the weight of giant pumpkins and other cucurbits grown in the United States that were entered into official GPC competitions between the years 2013 - 2021.
 
 # Data
 In order to answer this question, we evaluated all competitive entries in official GPC competitions from 2013 - 2021 and modeled the official competition weight of the pumpkin or cucurbit as a function of the weather conditions it was grown under, while controlling for additional factors. Given weather is a complex system and pumpkins are grown over many months, we considered several different aggregated weather metrics such
