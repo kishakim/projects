@@ -1,0 +1,251 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Power Analysis 
+
+```{r load packages, include=FALSE}
+library(data.table)
+library(magrittr)
+library(ggplot2)
+```
+
+## Generate Data
+Upon analysis of multiple related studies on cigarette litter, the team chose three treatments that had an impact on the number of cigarette butts (CB) on the ground. The first case is whether the environment is dirty or clean. The team will stage CBs on the ground as treatment. The next case is whether there are accessible bins available to see if there is a reduction in litter. The final case is whether there are visible signs directing people to the available bins.
+
+For the first treatment case, the team referenced mean and standard deviation on a study that was conducted that analyzed the effects of clean environments on a college campus [1]. In this study, the team staged the areas of interest with CBs for the treatment condition. In order to apply this to our own experiment, we had to increase the number of CB findings since their recordings happened every 2 hours. Realistically, our team will be collecting data daily so we scaled the findings by 3 to 5 times more CB to align with people's typical work / recreational schedule.
+
+As for the second treatment, the team would like to use the bin as a treatment because Smith and Novotny reported that 2/3 of smokers are not inclined to throw CB in the garbage bin if they are more than 10 paces away [2]. We created our simulation by centering a random normal sample with the mean around 1 for the smokers that use the bin to dispose of CB and 1.5 for the smokers that won’t be using the bin [because the bin is more than 10 paces further away [1]. As we do not know the standard deviation of the data, we are assuming 1 and adding a noise as the same method mentioned in the staged treatment. 
+
+Lastly, for the signs treatment, the team would like to differentiate the effectiveness of a sign as a factor in proper CB disposal. Smith and Novotny reported that 72% of smokers who notices the installment of new receptacles do use them; however, only 20% of smokers do notice the installment [2]. To this effect, we would like to display messages about the nearest garbage cans as well as the detrimental effects of littering CB. For this data, we generated in the same manner as the bin’s random normal sample with mean of 1 for the sign subjects and 1.7 for the ones who do not see the signs.
+
+When the team is performing the full experiment, we intend to capture additional factors to see if there is correlation. These variables include the location of the data collection, the average temperature that day, and other weather conditions. Since all of the cities that the team members live in are northern, we expect relatively similar weather conditions, but the data will still be collected as reference.
+
+```{r create data, include=FALSE}
+set.seed(0)
+d <- data.table(
+  subject_id = c(1:20),
+  staged = rep(c("yes","no")), # yes: throw cig on the floor
+  bin = rep(c("yes", "no")), # yes: bin is accessible nearby
+  signs = rep(c("yes","no")) # yes: sees a sign directing to the bin / the damages of CB litter
+)
+noise = c(3:5) # noise added to our treatment effect 
+
+# https://iopscience.iop.org/article/10.1088/2515-7620/abb6da/meta
+clean = abs(round(rnorm(n = 103, mean = 1.019, sd = 1.950))) * sample(noise,1)
+dirty = abs(round(rnorm(n = 103, mean = 1.651, sd = 1.753))) *sample(noise,1)
+d$NumCBs_staged <- ifelse(d$staged == 'no', sample(clean) , sample(dirty))
+
+# https://www.industrydocuments.ucsf.edu/tobacco/docs/#id=nffy0090
+no_bin = abs(round(rnorm(n = 103, mean = 1.50, sd = 1))) * sample(noise,1) #more CB no use
+use_bin = abs(round(rnorm(n = 103, mean = 1.0, sd = 1))) * sample(noise,1)
+d$NumCBs_bin <- ifelse(d$bin == 'yes', sample(use_bin) , sample(no_bin))
+
+# https://www.industrydocuments.ucsf.edu/tobacco/docs/#id=qzvd0069 
+sign = abs(round(rnorm(n = 103, mean = 1, sd = 1))) * sample(noise,1) #less CB with sign
+no_sign  = abs(round(rnorm(n = 103, mean = 1.7, sd = 1))) * sample(noise,1)
+d$NumCBs_sign <- ifelse(d$bin == 'yes', sample(sign) , sample(no_sign))
+```
+
+## Generate ATE for the 3 scenarios
+
+```{r ate t-test, include=TRUE}
+CB_staged_group_mean <- d[ , .(group_mean = mean(NumCBs_staged)), keyby = .(staged)]
+CB_staged_ate        <- CB_staged_group_mean[ , diff(group_mean)]
+
+CB_bin_group_mean <- d[ , .(group_mean = mean(NumCBs_bin)), keyby = .(bin)]
+CB_bin_ate        <- CB_bin_group_mean[ , diff(group_mean)]
+
+CB_signs_group_mean <- d[ , .(group_mean = mean(NumCBs_sign)), keyby = .(signs)]
+CB_signs_ate        <- CB_signs_group_mean[ , diff(group_mean)]
+
+
+c(CB_staged_ate, CB_bin_ate, CB_signs_ate)
+```
+
+
+## Power Calculation: Treatment Effect of staged CB
+### Sample 1 - Staged CBs Treamtent
+
+
+```{r write function for sampling 1, include=TRUE}
+
+#resampling function for the power analysis
+cb_sample <- function(data = d, size_in_each = 5) { 
+  data[ , .(NumCBs_staged = sample(NumCBs_staged, size_in_each, replace = TRUE)), by = staged] %$%
+    t.test(NumCBs_staged ~ staged) %$%
+    p.value
+}
+```
+
+
+```{r histogram of samples 1, include=FALSE}
+### Visual Analysis
+
+##Visually comparing the distributions with the treatment effect and without.
+
+# creating the dataframes to work with in ggplot
+df <- data.frame(d[staged == "yes", NumCBs_staged])
+df_no <- data.frame(d[staged == "no", NumCBs_staged])
+
+# distribution of staged treatment
+ggplot(df, aes(x = d.staged.....yes...NumCBs_staged.)) +                           # Basic ggplot2 histogram
+  geom_histogram(bins=5)
+
+# distribution of no treatment
+ggplot(df_no, aes(x = d.staged.....no...NumCBs_staged.)) +                           # Basic ggplot2 histogram
+  geom_histogram(bins=5)
+```
+
+
+
+```{r power analysis 1, include=TRUE}
+percentages_to_sample <- seq(from = 10, to = 30, by = 1)
+sample_per_condition_staged  <- (d[ , .N] * .5 * percentages_to_sample) %>% 
+  round()
+achieved_power_staged <- NA
+
+for(i in 1:length(sample_per_condition_staged)) { 
+
+  p_values <- replicate(
+    n = 1000, 
+    expr = cb_sample(data = d, size_in_each = sample_per_condition_staged[i])
+    ) 
+  
+  achieved_power_staged[i] <- mean(p_values < 0.05)
+}
+```
+
+### Sample 2 - Bins Treatment 
+
+```{r write function for sampling 2, include=TRUE}
+
+#resampling function for the power analysis
+cb_sample_bin <- function(data = d, size_in_each = 5) { 
+  data[ , .(NumCBs_bin = sample(NumCBs_bin, size_in_each, replace = TRUE)), by = bin] %$%
+    t.test(NumCBs_bin ~ bin) %$%
+    p.value
+}
+```
+
+
+```{r histogram of samples 2, include=FALSE}
+### Visual Analysis
+
+##Visually comparing the distributions with the treatment and without.
+
+# creating the dataframes to work with in ggplot
+df <- data.frame(d[bin == "yes", NumCBs_bin])
+df_no <- data.frame(d[bin == "no", NumCBs_bin])
+
+# distribution of bin treatment
+ggplot(df, aes(x = d.bin.....yes...NumCBs_bin.)) +                           # Basic ggplot2 histogram
+  geom_histogram(bins=5)
+
+# distribution of no treatment
+ggplot(df_no, aes(x = d.bin.....no...NumCBs_bin.)) +                           # Basic ggplot2 histogram
+  geom_histogram(bins=5)
+```
+
+
+```{r power analysis 2, include=TRUE}
+percentages_to_sample <- seq(from = 10, to = 30, by = 1)
+sample_per_condition_bin  <- (d[ , .N] * .5 * percentages_to_sample) %>% 
+  round()
+achieved_power_bin <- NA
+
+for(i in 1:length(sample_per_condition_bin)) { 
+  p_values <- replicate(
+    n = 1000, 
+    expr = cb_sample_bin(data = d, size_in_each = sample_per_condition_bin[i])
+    ) 
+  
+  achieved_power_bin[i] <- mean(p_values < 0.05)
+
+}
+```
+
+
+### Sample 3 - Signs Treatment
+\footnote{code was replicated for Sample 2 and 3 following the same technique as in Sample 1}
+
+```{r write function for sampling 3, include=TRUE}
+
+#resampling function for the power analysis
+cb_sample_sign <- function(data = d, size_in_each = 5) { 
+  data[ , .(NumCBs_sign = sample(NumCBs_sign, size_in_each, replace = TRUE)), by = signs] %$%
+    t.test(NumCBs_sign ~ signs) %$%
+    p.value
+}
+```
+
+
+```{r histogram of samples 3, include=FALSE}
+### Visual Analysis
+
+##Visually comparing the distributions of treatment effect and not treatment effect.
+
+# creating the dataframes to work with in ggplot
+df <- data.frame(d[signs == "yes", NumCBs_sign])
+df_no <- data.frame(d[signs == "no", NumCBs_sign])
+
+# distribution of signs treatment
+ggplot(df, aes(x = d.signs.....yes...NumCBs_sign.)) +                           # Basic ggplot2 histogram
+  geom_histogram(bins=5)
+
+# distribution of no treatment
+ggplot(df_no, aes(x = d.signs.....no...NumCBs_sign.)) +                           # Basic ggplot2 histogram
+  geom_histogram(bins=5)
+```
+
+
+
+```{r power analysis 3, include=TRUE}
+percentages_to_sample <- seq(from = 10, to = 30, by = 1)
+sample_per_condition_sign  <- (d[ , .N] * .5 * percentages_to_sample) %>% 
+  round()
+achieved_power_sign <- NA
+
+for(i in 1:length(sample_per_condition_sign)) { 
+  p_values <- replicate(
+    n = 1000, 
+    expr = cb_sample_sign(data = d, size_in_each = sample_per_condition_sign[i])
+    ) 
+  
+  achieved_power_sign[i] <- mean(p_values < 0.05)
+}
+
+```
+
+
+### Power Calculation Visual Analysis
+
+In Sample 3, the presence of signs in the smoking area and Sample 1 staging CBs in the smoking areas achieved the necessary power of 0.8, which are reasonable treatment effects we would consider in the further experiment design. For treatment using signs, ~150 sample size is required to achieve 0.8; treatment using staging CBs, ~250 samplze size is required to achieve desired power of 0.8. However, we may reconsider the bin or no bin approach since it achieved low power and gained very little power as we increased the sample size.
+
+```{r,  include=TRUE}
+ggplot() + 
+  geom_line(aes(x = sample_per_condition_staged, y = achieved_power_staged, colour ="Staged"), color="black") + 
+  geom_line(aes(x = sample_per_condition_bin, y = achieved_power_bin, colour ="Bin"), color = "red") + 
+  geom_line(aes(x = sample_per_condition_sign, y = achieved_power_sign, colour ="Sign"), color = "green") + 
+  geom_point(aes(x = sample_per_condition_staged, y = achieved_power_staged), color="black") + 
+  geom_point(aes(x = sample_per_condition_bin, y = achieved_power_bin), color = "red") + 
+  geom_point(aes(x = sample_per_condition_sign, y = achieved_power_sign), color = "green") +
+  geom_hline(yintercept = 0.8, color = 'blue', size=0.5)+ 
+  labs(
+    title    = 'Achieved Power', 
+    subtitle = 'Power is increasing in N, but at a decreasing rate.', 
+    x        = 'Sample Size', 
+    y        = 'Achieved Power'
+  )
+
+
+
+
+```
+
+## References
+[1] Julian Sagebiel et al 2020 Environ. Res. Commun. 2 091002
+
+[2] Smith, E. A., & Novotny, T. E. (2011). Whose butt is it? Tobacco industry research about smokers and cigarette butt waste. Tobacco control, 20(Suppl 1), i2-i9.
+
