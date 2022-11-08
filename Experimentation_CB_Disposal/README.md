@@ -1,7 +1,7 @@
 # Background
 
 
-Objective - predict the article_ids each customer will purchase during the 7-day period immediately after the training data period.
+Objective - Identify causal infererence of having signage on cigarette butt disposal in 4 major US cities
 
 **Data Files**
 
@@ -11,9 +11,7 @@ Objective - predict the article_ids each customer will purchase during the 7-day
 
 
 **Notebook Files**
-1. Recommender_EDA.ipynb : This was used to do exploratory data analysis of above 3 data sets.
-2. Recommender_KNN_Model.ipynb : This notebook was used to run baseline collaborateive filtering method using KNN.
-3. Recommender_LightFM_Model.ipynb : This notebook was used to run LightFM, which is the main hybrid model ran for this project. Includes model evalualtion, hypertuning and final model result.
+1. power-analysis-calculations.Rmd : This was used to identify number of data points required to achieve experimentational power.
 
 
-**Final Report** : Personalized Fashion Recommendations.pdf
+**Final Report** : Experimentation_CB_Disposal.pdf
