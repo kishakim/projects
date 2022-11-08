@@ -2,6 +2,11 @@
 
 
 Objective - Identify causal infererence of having signage on cigarette butt disposal in 4 major US cities
+**Objectives**
+Through our research, we wanted to answer the following questions:
+* Did the Covid-19 impact the housing price change in the past 2 years?
+* Did the Covid-19 and the subsequent shift in working styles increase housing prices in suburbs of large cities?
+
 
 **Data Files**
 
@@ -11,7 +16,9 @@ Objective - Identify causal infererence of having signage on cigarette butt disp
 
 
 **Notebook Files**
-1. power-analysis-calculations.Rmd : This was used to identify number of data points required to achieve experimentational power.
+1. Covid-Impact.ipynb : This was used to perform data analysis and patterns of US housing price impact
 
 
-**Final Report** : Experimentation_CB_Disposal.pdf
+
+
+**Final Report** : Covid-Impact-on-RealEstate.pdf
