@@ -9,6 +9,8 @@ Objective - predict the article_ids each customer will purchase during the 7-day
 * customers.csv - metadata for each customer_id in dataset
 * transactions_train.csv - the training data, consisting of the purchases each customer for each date, as     well as additional information. Duplicate rows correspond to multiple purchases of the same item. 
 
+Data file has been loaded to Cloud due to github size limitations
+
 
 **Notebook Files**
 1. Recommender_EDA.ipynb : This was used to do exploratory data analysis of above 3 data sets.
