@@ -17,5 +17,5 @@ disposed cigarette butts in four US major cities, through designing and conducti
 
 
 
-Machine learning, Regression, Qualitative modeling, experimentation, causal inference.
+Machine learning, Regression, Statistical hypothesis testing, data modeling, experimentation, causal inference
 
