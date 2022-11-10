@@ -1,7 +1,7 @@
 # Background
 
 
-Objective - predict the article_ids each customer will purchase during the 7-day period immediately after the training data period.
+**Objective** - predict the article_ids each customer will purchase during the 7-day period immediately after the training data period.
 
 **Data Files**
 
