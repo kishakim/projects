@@ -1,11 +1,13 @@
 # Background
 
 
-Objective - Identify causal infererence of having signage on cigarette butt disposal in 4 major US cities
+**Objective** - Identify causal infererence of having signage on cigarette butt disposal in 4 major US cities
 
 **Data Files**
 
 * CBCollection.csv - collected experiment data for control and treatment
+Data file has been loaded to Cloud due to github size limitations
+
 
 **Notebook Files**
 1. power-analysis-calculations.Rmd : This was used to identify number of data points required to achieve experimentational power.
