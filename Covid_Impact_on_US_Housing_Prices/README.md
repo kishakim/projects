@@ -10,9 +10,12 @@ Through our research, we wanted to answer the following questions:
 
 **Data Files**
 
-* articles.csv - detailed metadata for each article_id available for purchase
-* customers.csv - metadata for each customer_id in dataset
-* transactions_train.csv - the training data, consisting of the purchases each customer for each date, as     well as additional information. Duplicate rows correspond to multiple purchases of the same item. 
+* WA_COVID19_Cases.csv - number of covid cases by zip code for the past 2 yrears
+* NY_COVID19_Cases.csv  - number of covid cases by zip code for the past 2 yrears
+* zillow_price_data_by_county.csv - housing prices by county level along with zipcodes data
+
+Data file has been loaded to Cloud due to github size limitations
+
 
 
 **Notebook Files**
