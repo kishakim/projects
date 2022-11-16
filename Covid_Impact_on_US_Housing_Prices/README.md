@@ -1,7 +1,6 @@
 # Background
 
 
-Objective - Identify causal infererence of having signage on cigarette butt disposal in 4 major US cities
 **Objectives**
 Through our research, we wanted to answer the following questions:
 * Did the Covid-19 impact the housing price change in the past 2 years?
