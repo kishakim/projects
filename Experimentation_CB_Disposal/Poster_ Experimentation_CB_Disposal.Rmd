@@ -1,0 +1,182 @@
+---
+title:  Reducing the Littering of Cigarette Butts through Signage Intervention, An Experiment in Urban Areas
+author:
+  - name: Kisha Nayoung Kim
+  - name: Tanya Flint 
+  - name: Tori Davis
+  - name: Eric Ling
+  - name: D. Alex Hughes
+affiliation:
+    address: UC Berkeley, School of Information 
+affiliation_textcol: '#C4820E'    
+column_numbers: 3
+logoleft_name: ./berkeley_gold.png
+logoright_name: ./ischool_white.png
+output: 
+  posterdown::posterdown_html:
+    self_contained: false
+bibliography: packages.bib
+primary_colour: '#003262'
+secondary_colour: '#FDB515'
+accent_colour: '#B9D3B6'
+titletext_fontfamily: 'Verdana'
+font_family: 'Verdana'
+font-size: 16pt
+---
+
+```{r load packages, message=FALSE, echo=FALSE}
+library(tidyverse)
+library(janitor)
+
+library(data.table)
+
+library(lme4)
+library(sandwich)
+library(lmtest)
+library(stargazer)
+
+library(dplyr)
+library(ggplot2)
+library(magrittr)
+library(patchwork)
+
+library(stringr)
+library(lubridate)
+
+library(knitr)
+
+library(gridExtra)
+
+library(here)
+```
+
+```{r, message=FALSE, echo=FALSE}
+theme_set(theme_minimal())
+```
+
+```{r load data, echo=FALSE}
+d <- fread(file = here('data', 'final', 'cb_model_input.csv'))
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Introduction
+
+Globally, 4.5 trillion cigarette butts (CBs) are improperly disposed each year. Cigarettes contain at least 44 highly carcinogenic chemical compounds in large amounts; and, after burning, the majority of the most toxic chemicals found in cigarettes are concentrated in the CB's non-biodegradable cigarette filters. In this study, we evaluate the efficacy of a low-cost, public-space signage intervention to reduce littered CBs at twenty-eight sites across four international cities. 
+
+
+# Implications and Findings
+
+- Signs signaling negative environmental consequences cause a statistically-significant, policy-relevant *10.8% reduction in littered CBs.* 
+- Signs are *only* effective when placed near garbage bins for CB disposal.
+
+For urban-design and public health organizations, findings suggest that systematic changes, such as singage, can be effectively implemented to reduce littering and environmental risks, followed with further research.
+
+# Treatment 
+Treatment was applied by putting below signage in smoking areas to test the hypothesis:
+
+- *If signs appealing to emotions are an effective medium in discouraging littering, then cigarette butts littering should decrease at the treatment sites compared to the control sites.*
+<center>
+  ![](./sign.png){width=49%} ![](./treatment_site.png){width=49%}
+<center>
+
+
+# Methods
+
+**Experiment Design**
+
+- Repeated Measures, Cross-over Field Experiment
+- **4** Cities, **28** Sites, **10** Days
+- Randomization process to account for day-to-day variances, where 28 sites were evenly divided into treatment vs control.
+- Prior to the experiment, average CB count across 28 sites varied, and baseline CB was collected as one of the independent variables.
+- Additional variables include temperature, weather, near garbage bag, type of facilities (e.g. school, transportation-like), day of the week, city
+
+![](./treatment_schedule_chicago.png){width=90%}
+
+**Measurement** 
+
+- Count of CBs was collected daily in person, place in time in each city
+- Treatment effect was measured by comparing the number of CBs between smoking areas.
+
+```{r create baseline plot, message=FALSE, warning=FALSE, out.width="90%"}
+d %>% 
+  group_by(location, city) %>% 
+  summarise(first_cb = mean(cb_baseline, na.rm=TRUE)) %>% 
+  ggplot() + 
+  geom_density(aes(x=first_cb, color=city, fill=city), alpha=0.25) + 
+  geom_density(aes(x=first_cb), size=1.5, show.legend = FALSE) + 
+  labs(
+    title = 'Baseline Count of Cigarette Butts', 
+    x     = 'Count of Butts', 
+    y     = NULL) + 
+  theme(legend.position = 'bottom')
+```
+
+**Modeling**
+
+**1. Ordinary Least Squares Model: City Fixed Effect (FE)**
+- Baseline model observed effect of treatment on the count of CBs. Treatment alone was not significant, so incremental fixed effects in the following: city, weather, CB baseline, garbage nearby, and facility.
+
+**2. Linear mixed effects Model: Location Random Effect and City FE**
+- City continues to act as a fixed effect, and location has been added to measure the random effect. The 28 locations had different baselines of the number of CBs prior to the experiment. Location random effect captures the variances in baseline.
+
+# Results
+![](./results.png){width=100%}
+
+```{r mixed effects models stargazer, echo=FALSE, include=FALSE, results='asis', warning = FALSE, fig.width=12, fig.height=1} 
+model_1 <- lm(cb_count ~ treated, data=d)
+
+model_3 <- lm(cb_count ~ treated + city + weather + cb_baseline, data=d)
+
+model_6 <- lm(cb_count ~ treated + city + cb_baseline + near_garbage + facility , data = d)
+
+lmer_model_2 <- lmer(cb_count ~ treated + city + (1 + city|location), REML=FALSE, data=d)
+
+model_10 <- lm(cb_count ~ treated + city + cb_baseline + near_garbage + facility +treated * near_garbage, data = d)
+
+lmer_model_3 <- lmer(cb_count ~ treated + city + near_garbage + (1 + city|location) + treated * near_garbage, REML=FALSE, data=d)
+
+# summary(lmer_model_2)
+
+stargazer(
+  model_1, model_3, model_6,  model_10, lmer_model_2,
+  covariate.labels = c('Treated', 'Foggy', 'Rainy', 'Sunny', 'Windy', 'Baseline', 'Near Garbage', 'Interaction: Treatment * Near Garbage'),
+  type="html",
+#  type="text",
+
+  header = FALSE, 
+  no.space = TRUE,
+  omit = c('city', 'facility'),
+  star.cutoffs = c(0.05, 0.01, 0.001),
+  dep.var.labels = 'DV: Count of Cigarette Butts', 
+  dep.var.caption = "", 
+  digits = 2, 
+  omit.stat = c("F", "SER", 'ser', 'adj.rsq', 'aic')
+)
+
+```
+
+
+```{r ate & cace, include=FALSE}
+
+d_mean  <-d[ , .(.N, cb_count = mean(cb_count)), by = .(treated, location)]
+d_mean2 <-d[ , .(.N, cb_count = mean(cb_count)), by = .(treated)]
+d[ , .(.N, cb_count = mean(cb_count)), by = .(treated)]
+
+itt <- d_mean2[ , diff(cb_count)]
+
+cace <- itt / round(d_mean2[2,2]/140,2)
+
+
+
+```
+
+Intent to treat (ITT) for the experiment is `r round(itt,2)`. Complier average causal effect (CACE) is `r round(cace,2)`, with `r round(124/140,2)*100`% compliance for treatment.
+
+
+# Future Directions
+1. Compliance: run a longer pilot study and ensure all sites allow for data collection;  *Resulted in 2 sites dropped after 2 days.* *Swap sign in NYC for the one site that should be treatment after 5 days*
+2. Collect data with less weather variation and holidays;  *Precision of estimates and increase in compliance: Vancouver had three occurrences where signs blew away*. 

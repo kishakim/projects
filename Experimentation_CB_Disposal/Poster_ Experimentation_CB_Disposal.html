@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<!--
+Font-awesome icons ie github or twitter
+-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/brands.css" integrity="sha384-n9+6/aSqa9lBidZMRCQHTHKJscPq6NW4pCQBiMmHdUCvPN8ZOg2zJJTkC7WIezWv" crossorigin="anonymous">
+
+<!--
+Google fonts api stuff
+-->
+<link href='https://fonts.googleapis.com/css?family=Verdana' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Verdana' rel='stylesheet'>
+
+
+
+<title>Reducing the Littering of Cigarette Butts through Signage Intervention, An Experiment in Urban Areas</title>
+
+<script src="final_poster_files/header-attrs-2.20/header-attrs.js"></script>
+
+
+
+
+
+<style>
+@page {
+size: 45in 38in;
+margin: 0;
+padding: 0;
+}
+body {
+margin: 0;
+font-size: 45px;
+width: 45in;
+height: 38in;
+padding: 0;
+text-align: justify;
+font-family: Verdana;
+}
+.poster_wrap {
+width: 45in;
+height: 38in;
+padding: 0cm;
+}
+.title_container {
+width: 45in;
+height: calc(38in * 0.15);
+overflow: hidden;
+background-color: #003262;
+border: 0 solid #FDB515;
+}
+.logo_left {
+float: left;
+width: 10%;
+height: 100%;
+background-color: #003262;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.logo_right {
+float: right;
+width: 10%;
+height: 100%;
+background-color: #003262;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.poster_title {
+text-align: center;
+position: relative;
+float: left;
+width: 80%;
+height: 100%;
+color: #FFFFFF;
+top: 50%;
+transform: translateY(-50%);
+-webkit-transform: translateY(-50%);
+}
+#title {
+font-family: Verdana;
+}
+/* unvisited link */
+a:link {
+color: #B9D3B6;
+}
+.mybreak {
+  break-before: column;
+}
+/* visited link */
+a:visited {
+color: #B9D3B6;
+}
+
+/* mouse over link */
+a:hover {
+color: #B9D3B6;
+}
+
+/* selected link */
+a:active {
+color: #B9D3B6;
+}
+.poster_body {
+-webkit-column-count: 3; /* Chrome, Safari, Opera */
+-moz-column-count: 3; /* Firefox */
+column-count: 3;
+-webkit-column-fill: auto;
+-moz-column-fill: auto;
+column-fill: auto;
+-webkit-column-rule-width: 1mm;
+-moz-column-rule-width: 1mm;
+column-rule-width: 1mm;
+-webkit-column-rule-style: dashed;
+-moz-column-rule-style: dashed;
+column-rule-style: dashed;
+-webkit-column-rule-color: #003262;
+-moz-column-rule-color: #003262;
+column-rule-color: #003262;
+column-gap: 1em;
+padding-left: 0.5em;
+padding-right: 0.5em;
+height: 100%;
+color: #000000
+background-color: #ffffff;
+}
+.poster_title h1 {
+font-size: 75pt;
+margin: 0;
+border: 0;
+font-weight: normal;
+}
+.poster_body_wrap{
+width: calc(45in + 0 + 0);
+height: calc(38in * 0.83);
+padding-top: calc(38in * 0.005);
+padding-bottom: calc(38in * 0.01);
+background-color: #ffffff;
+}
+.poster_title h3 {
+color: #FDB515;
+font-size: 50pt;
+margin: 0;
+border: 0;
+font-weight: normal;
+}
+.poster_title h3 > sup {
+  font-size: 35pt;
+  margin-left: 0.02em;
+}
+.poster_title h5 {
+color: #C4820E;
+font-size: 35pt;
+margin: 0;
+border: 0;
+font-weight: normal;
+}
+img {
+margin-top: 2cm;
+margin-bottom: 0;
+}
+.section {
+  padding: 0.2em;
+}
+.poster_body h1 {
+text-align: center;
+color: #FFFFFF;
+font-size: 65pt;
+border: 2mm solid #003262;
+background-color: #003262;
+border-radius: 4mm 0mm;
+margin-top: 2mm;
+margin-bottom: 2mm;
+font-weight: normal;
+}
+.poster_body h2 {
+color: #000000;
+font-size: 40pt;
+padding-left: 4mm;
+font-weight: normal;
+}
+.span {
+width: 200%;
+}
+/* center align leaflet map,
+from https://stackoverflow.com/questions/52112119/center-leaflet-in-a-rmarkdown-document */
+.html-widget {
+margin: auto;
+position: sticky;
+margin-top: 2cm;
+margin-bottom: 2cm;
+}
+.leaflet.html-widget.html-widget-static-bound.leaflet-container.leaflet-touch.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom {
+position: sticky;
+width: 100%;
+}
+pre.sourceCode.r {
+background-color: #dddddd40;
+border-radius: 4mm;
+padding: 4mm;
+width: 75%;
+/* align-items: center; */
+margin: auto;
+padding-left: 2cm;
+}
+code.sourceCode.r{
+background-color: transparent;
+font-size: 20pt;
+border-radius: 2mm;
+}
+.caption {
+font-size: 25pt;
+}
+.table caption {
+font-size: 25pt;
+padding-bottom: 3mm;
+
+}
+code {
+font-size: 1em;
+font-family: monospace;
+background-color: #FDB51524;
+color: #003262;
+padding: 1.2mm;
+border-radius: 2mm;
+}
+.poster_title code {
+font-size: 1em;
+}
+table {
+font-size: 40px;
+margin: auto;
+border-top: 3px solid #666;
+border-bottom: 3px solid #666;
+}
+table thead th {
+border-bottom: 3px solid #ddd;
+}
+td {
+padding: 8px;
+}
+th {
+padding: 15px;
+}
+caption {
+margin-bottom: 10px;
+}
+.poster_body p {
+margin-right: 4mm;
+margin-left: 4mm;
+margin-top: 6mm;
+margin-bottom: 10mm;
+}
+.poster_body ol {
+margin-right: 4mm;
+margin-left: 4mm;
+}
+#ul {
+margin-right: 4mm;
+margin-left: 4mm;
+}
+.references p {
+font-size: 20pt;
+}
+.orcid img {
+  width: 1em;
+}
+</style>
+</head>
+<body>
+
+
+<div class="poster_wrap">
+<div class="title_container">
+<!-- Left Logo  -->
+<div class="logo_left">
+<img src= 'berkeley_gold.png' style="width: 80%">
+</div>
+<!-- Poster Title -->
+<div class= "poster_title">
+<h1 id="title">Reducing the Littering of Cigarette Butts through Signage Intervention, An Experiment in Urban Areas</h1>
+<h3 id="author">Kisha Nayoung Kim<sup></sup>, Tanya Flint<sup></sup>, Tori Davis<sup></sup>, Eric Ling<sup></sup>, D. Alex Hughes<sup></sup></h3><br>
+<h5 id="affiliation"><sup></sup> UC Berkeley, School of Information</h5>
+</div>
+<!-- Right Logo  -->
+<div class="logo_right">
+<img src=./ischool_white.png style="width: 80%">
+</div>
+</div>
+
+<div class='poster_body_wrap'>
+<div class='poster_body'>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Globally, 4.5 trillion cigarette butts (CBs) are improperly disposed each year. Cigarettes contain at least 44 highly carcinogenic chemical compounds in large amounts; and, after burning, the majority of the most toxic chemicals found in cigarettes are concentrated in the CB’s non-biodegradable cigarette filters. In this study, we evaluate the efficacy of a low-cost, public-space signage intervention to reduce littered CBs at twenty-eight sites across four international cities.</p>
+</div>
+<div id="implications-and-findings" class="section level1">
+<h1>Implications and Findings</h1>
+<ul>
+<li>Signs signaling negative environmental consequences cause a statistically-significant, policy-relevant <em>10.8% reduction in littered CBs.</em></li>
+<li>Signs are <em>only</em> effective when placed near garbage bins for CB disposal.</li>
+</ul>
+<p>For urban-design and public health organizations, findings suggest that systematic changes, such as singage, can be effectively implemented to reduce littering and environmental risks, followed with further research.</p>
+</div>
+<div id="treatment" class="section level1">
+<h1>Treatment</h1>
+<p>Treatment was applied by putting below signage in smoking areas to test the hypothesis:</p>
+<ul>
+<li><em>If signs appealing to emotions are an effective medium in discouraging littering, then cigarette butts littering should decrease at the treatment sites compared to the control sites.</em>
+<center>
+<img src="sign.png" style="width:49.0%" /> <img src="treatment_site.png" style="width:49.0%" />
+<center></li>
+</ul>
+</div>
+<div id="methods" class="section level1">
+<h1>Methods</h1>
+<p><strong>Experiment Design</strong></p>
+<ul>
+<li>Repeated Measures, Cross-over Field Experiment</li>
+<li><strong>4</strong> Cities, <strong>28</strong> Sites, <strong>10</strong> Days</li>
+<li>Randomization process to account for day-to-day variances, where 28 sites were evenly divided into treatment vs control.</li>
+<li>Prior to the experiment, average CB count across 28 sites varied, and baseline CB was collected as one of the independent variables.</li>
+<li>Additional variables include temperature, weather, near garbage bag, type of facilities (e.g. school, transportation-like), day of the week, city</li>
+</ul>
+<p><img src="treatment_schedule_chicago.png" style="width:90.0%" /></p>
+<p><strong>Measurement</strong></p>
+<ul>
+<li>Count of CBs was collected daily in person, place in time in each city</li>
+<li>Treatment effect was measured by comparing the number of CBs between smoking areas.</li>
+</ul>
+<p><img src="final_poster_files/figure-html/create%20baseline%20plot-1.png" width="90%" /></p>
+<p><strong>Modeling</strong></p>
+<p><strong>1. Ordinary Least Squares Model: City Fixed Effect (FE)</strong>
+- Baseline model observed effect of treatment on the count of CBs. Treatment alone was not significant, so incremental fixed effects in the following: city, weather, CB baseline, garbage nearby, and facility.</p>
+<p><strong>2. Linear mixed effects Model: Location Random Effect and City FE</strong>
+- City continues to act as a fixed effect, and location has been added to measure the random effect. The 28 locations had different baselines of the number of CBs prior to the experiment. Location random effect captures the variances in baseline.</p>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<p><img src="results.png" style="width:100.0%" /></p>
+<p>Intent to treat (ITT) for the experiment is 1.34. Complier average causal effect (CACE) is 1.35, with 89% compliance for treatment.</p>
+</div>
+<div id="future-directions" class="section level1">
+<h1>Future Directions</h1>
+<ol style="list-style-type: decimal">
+<li>Compliance: run a longer pilot study and ensure all sites allow for data collection; <em>Resulted in 2 sites dropped after 2 days.</em> <em>Swap sign in NYC for the one site that should be treatment after 5 days</em></li>
+<li>Collect data with less weather variation and holidays; <em>Precision of estimates and increase in compliance: Vancouver had three occurrences where signs blew away</em>.</li>
+</ol>
+</div>
+</div>
+</div>
+
+</div>
+
+
+
+</body>
+</html>

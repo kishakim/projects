@@ -1,0 +1,204 @@
+---
+title: Signage to Reduce Cigarette Butt Litter
+
+# Use letters for affiliations
+author:
+  - name: Kisha Kim
+  - name: Tanya Flint 
+  - name: Tori Davis
+  - name: Eric Ling
+  - name: D. Alex Hughes
+address: UC Berkeley, School of Information, Berkeley, CA, 94708
+
+# For footer text  TODO(fold into template, allow free form two-authors)
+lead_author_surname: Kim et al. 
+
+# Abstract
+abstract: Globally, 4.5 trillion cigarette butts (CBs) are improperly disposed of each year \citep{araujo2019}. These littered CBs leach known carcinogens and pose grave health risks to both people and the environment \citep{araujo2019}. In this study, we evaluate the efficacy of a low-cost, public-space signage intervention to reduce littered CBs at twenty-six sites across four international cities. Using a repeated-measures, cross-over design, we find that signs signaling negative environmental consequences cause a statistically-significant, policy-relevant 10.8% reduction in littered CBs. These findings have important implications for urban-design and  public health organizations, and suggest that further research is needed to evaluate how signage and waste bins might be optimally deployed as a mitigation strategy. 
+
+# Optional: Acknowledgements
+acknowledgements: |
+  I would like to thank my mom. 
+
+# Optional: One or more keywords
+keywords:
+  - one
+  - two
+  - optional
+  - keywords
+  - here
+
+# Paper size for the document, values of letter and a4
+papersize: letter
+
+# Font size of the document, values of 9pt (default), 10pt, 11pt and 12pt
+fontsize: 9pt
+
+# Optional: Force one-column layout, default is two-column
+#one_column: true
+
+# Optional: Enables lineno mode, but only if one_column mode is also true
+#lineno: true
+
+# Optional: Enable one-sided layout, default is two-sided
+#one_sided: true
+
+# Optional: Enable section numbering, default is unnumbered
+#numbersections: true
+
+# Optional: Specify the depth of section number, default is 5
+#secnumdepth: 5
+
+# Optional: Skip inserting final break between acknowledgements, default is false
+skip_final_break: true
+
+# Optional: Bibliography 
+bibliography: references
+
+# Optional: Enable a 'Draft' watermark on the document
+#watermark: true
+
+# Produce a pinp document
+output: pinp::pinp
+---
+
+```{r load packages, echo=FALSE, warning=FALSE, message=FALSE}
+library(data.table)
+
+library(lme4)
+library(sandwich)
+library(lmtest)
+library(stargazer)
+
+library(dplyr)
+library(ggplot2)
+library(magrittr)
+library(patchwork)
+
+library(stringr)
+library(lubridate)
+
+library(knitr)
+
+library(gridExtra)
+
+library(here)
+```
+
+```{r set plotting themes, echo=FALSE}
+theme_set(theme_minimal())
+```
+
+```{r load data, echo=FALSE}
+d <- fread(file = here('data', 'final', 'cb_model_input.csv'))
+```
+
+```{r misc setup, echo=FALSE}
+inline_reference <- "r inline_reference"
+```
+
+# Introduction
+
+What signage is most effective in persuading smokers to properly dispose of their cigarette butts? Annually, humans consume 6 trillion cigarettes, and 75% of the remaining filter tips -- colloquially referred to as a *cigarette butts* (CB) -- never make it to the garbage bins \citep{araujo2019}. Cigarettes contain at least 44 highly carcinogenic chemical compounds in large amounts; and, after burning, the majority of the most toxic chemicals found in cigarettes are concentrated in the CB's non-biodegradable cigarette filters \citep{araujo2019, godfrey1983}. Signage is oftentimes the leading mechanism used for advocating for proper CBs disposal; however, the effectiveness of these signs are unknown. We present experimental results that signs showing graphics of suffering baby turtles causes a statistically significant reduction of 1.835 CBs compared to the sites without signs. With this finding, signs can be tailored to be more persuasive in CB disposal and reduce the amount of rainwater-transported CB in polluting the soil, aquatic, and surrounding environment \citep{araujo2019}.
+
+## Justification
+
+Posted signs signalling smokers of the improperly disposed CBs hazards may effect smokers' disposal behaviors. Subjects were most influenced when they were shown warning messages with explicit "perceived hazard, familiarity and sex" information \citep{godfrey1983}. That being said, smokers, despite being exposed to a variety of public ads about the damages of cigarette smoking -- even on cigarette boxes, continue to ignore such warnings. To this end, our messages will be targeting the damages done to their immediate surroundings and loved ones.
+
+## Qualitative Study 
+
+Prior to starting our experiments, we interviewed our friends who smoke about their CB disposal habits. In these interviews, our friends described that they would be most motivated to properly dispose of their CB if they had known about the environmental damages caused by CB littering. In addition, we found that most of these smokers dispose of their CB on the ground when there is no garbage can nearby; therefore, we added a covariate measurement on whether there is a garbage can at our collection site.
+
+# Theory 
+
+
+## Hypothesis
+
+If signs appealing to emotions are an effective medium in discouraging littering, then cigarette butts littering should decrease at the treatment sites compared to the control sites.
+
+# Experimental Details: Cross-over
+
+We present data collected across 7 locations in 4 major cities - Vancouver, New York, Chicago and Boston, making 28 individual sites. Across the span of 10 days, half locations will be set as control vs treatment via random selection. This is to account for daily differences with CBs (e.g. it's more likely that more smokers are on the street on Saturdays, so during this day, half location will be controlled and another half as treated).
+
+## Comparison of Potential Outcomes
+
+The potential outcomes are the number of CBs we compare across the control sites (without the sign) against the treatment sites (with signs posted). As we each have 7 sites, we alternate between 4 control sites and 3 treatment sites per person to account for day-to-day variances. We take an initial observation of the number of CBs, assign the sites to their respective groups, put up signs for the assigned treatment sites. After 5 days, we swap the control and treatment sites and collect CBs count for 5 more days.
+
+> todo: present tense check --\> below not done yet
+
+\begin{figure*}
+  \includegraphics[width=.5\linewidth]{../figures/roxo.png}
+\end{figure*}
+
+## Randomization Process
+
+For the feasibility of the study, we chose a clustering approach to randomization. The basis of the cluster was a single site where we randomly assigned sites to treatment and control. We numbered each site and used a random number generator to set half the sites to control and a half to treatment. We had 28 locations across 4 cities(7 in each city) which were evenly divided into two groups. Each group contained a randomized site since serving posted signs on an individual level would be very complex to almost impossible. Given that clustered design fit our needs it's important to note that it has a higher level of uncertainty because of possible uniform factors that affect each site.
+
+## Treatment
+
+In this experiment, people will see either the sign treatment or no-sign control. People in smoking areas where the signage is put up will only experience treatment, and reversely for the control. In order to measure the treatment effect, the number of CBs on the ground will be compared between smoking areas in treatment vs smoking areas in control. Given that people will see either treatment or control, different factors like time of the day, average population in categories (e.g. office buildings vs park vs ice cream shop will have different levels of traffic) will need to be distributed evenly between two groups.
+
+# Analysis
+
+## Data
+
+
+Some assumptions were made to cleanse the data prior to understanding the casual relationship. Experiment data was collected daily in the morning. Data collected outside of the 9-11am window has been removed from the modeling, and this accounted for 2% of the data. As we developed models, we focus on day of the week, facility, and city as our assumption is that these would have fixed effects on the dependent variable.
+
+Below is the visualization of how control vs treatment switched on day 5 of our experiment by each city. Additionally, in Vancouver, starting on day 3, signage posted at the city hall have been removed due to regulations. In New York, one site data collection was missed due to user error. One site continued to stay as a control site throughout the whole experiment due to regulations.
+
+```{=tex}
+\begin{figure*}
+  \includegraphics[width=\linewidth]{../figures/treatment_schedule}
+\end{figure*}
+```
+## Complier Average Causal Effect
+
+```{r ate & cace, include=FALSE}
+
+d_mean  <-d[ , .(.N, cb_count = mean(cb_count)), by = .(treated, location)]
+d_mean2 <-d[ , .(.N, cb_count = mean(cb_count)), by = .(treated)]
+
+itt <- d_mean2[ , diff(cb_count)]
+
+cace <- itt / round(d_mean2[2,2]/140,2)
+```
+
+The team calculated an intent to treat (ITT) for the experiment of `r round(itt,2)`. The experiment had compliance issues with some sites which resulted in only `r round(d_mean2[2,2]/140,2)`% compliance for treatment. Due to this, the complier average causal effect (CACE) is `r round(cace,2)`.
+
+## Models
+
+When developing our models, we began with our baseline model that looked at the effect of treatment on the count of cigarette butts. Treatment alone was not significant so we then incrementally added fixed effects in the following order: facility, cleaned last, garbage nearby, day of week, city, weather, temperature, and the facility & cleaned last interaction. The team found significance in transportation- and nightlife-like facilities, data collected on Sunday morning which we can associate with Saturday night, the city of Chicago, temperature, and the interaction term. Though we did not see any significance in our models for our treatment variable, we do see decrease in the standard error as we included our baseline CB counts. To this end, we feel that the location based baselines could play an important factor to determining the effects of our treatment. We decided to run a mixed-effect model to try to minimize the intra-site variances. The location-based random effects from across the four different cities would need to be accounted for to highlight the true effect of our signs.
+
+```{r drop no baseline, include=FALSE}
+# dropping 24 records with no baseline
+d <- d[!(is.na(d$cb_baseline)), ]
+```
+
+```{r baseline models models}
+# baseline model
+model_1 <- lm(cb_count ~ treated, data=d)
+anova(model_1)
+```
+
+In this mixed effect model, the city continues to act as a fixed effect, and location has been added to measure the random effect. The 28 locations across 4 cities have different baselines of the number of cigarette butts even prior to our experiment. Location random effect is capturing the variances in baseline for each location in this mixed effect model.
+
+```{r mixed effects models, echo=FALSE, include=TRUE, results='asis'}
+#Mixed-effects models are useful for understanding the difference between overall average effects across and within groups,
+
+#mixed-effect model 1 - take model from above, and layer in city fixed effect + location random effect
+lmer.model1<-lmer(cb_count ~ treated + city +  (1|location) + (city|location),
+                  data=d, REML = FALSE,
+                  control = lmerControl(optimizer ="Nelder_Mead"))
+
+stargazer(
+model_1, lmer.model1,
+header = FALSE, 
+no.space = TRUE, 
+omit.stat = c("F", "SER")
+)
+```
+
+\pagebreak
+
+# References
