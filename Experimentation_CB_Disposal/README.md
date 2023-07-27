@@ -11,6 +11,8 @@ Data file has been loaded to Cloud due to github size limitations
 
 **Notebook Files**
 1. power-analysis-calculations.Rmd : This was used to identify number of data points required to achieve experimentational power.
+2. Experimentation_CB_Disposal.Rmd : This is the final report
 
 
-**Final Report** : Experimentation_CB_Disposal.pdf
+
+**Final Report** : Experimentation_CB_Disposal.pdf, Poster_Experimentation_CB_Disposal.html
