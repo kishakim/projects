@@ -17,5 +17,7 @@ disposed cigarette butts in four US major cities, through designing and conducti
 
 
 
-Machine learning, Regression, Statistical hypothesis testing, data modeling, experimentation, causal inference
+Skills: Machine learning, Statistical Modeling, Regression, Statistical hypothesis testing, data modeling, experimentation, causal inference
+
+
 
