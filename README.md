@@ -12,7 +12,7 @@ disposed cigarette butts in four US major cities, through designing and conducti
 
 4. **Fashion_Recommender_System** : This project predicted fashion articles an existing customer would purchase in a 7-day period, using hybrid recommendation algorithm, LightFM (Python Scikit-learn), including data cleansing, model building, hypertuning parameters, and model evaluation
 
-5. **Spotify Podcast episode description summarization** : This project used NLP to summarize spotify podcast descriptions to help listeners find the right content & increase listening time on the platform. 
+5. **Spotify Podcast Episode Description Summarization** : This project used NLP to summarize spotify podcast descriptions to help listeners find the right content & increase listening time on the platform. 
   
 6. **Voter_Difficulty_2020Election** : This project compared difficulties that were faced in the 2020 presidential election, to help better prepare for the upcoming 2024 presidential election, using statistical testing.
 
